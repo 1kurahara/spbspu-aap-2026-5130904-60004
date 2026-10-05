@@ -4,5 +4,3 @@ int main()
 {
   std::cout << "ryabchikov.georgiy\n";
 }
-
-
