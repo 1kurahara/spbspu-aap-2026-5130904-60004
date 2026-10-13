@@ -34,6 +34,6 @@ int main()
     std::cerr << "Error: sequence is empty\n";
     return 2;
   }
-  std::cout << localMins << "\n";
+  std::cout << local_mins << "\n";
   return 0;
 }
