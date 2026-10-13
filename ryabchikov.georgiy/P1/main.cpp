@@ -1,7 +1,6 @@
 #include <iostream>
 
-namespace ryabchikov
-{
+namespace ryabchikov {
   bool isLocalMin(int a, int b, int c)
   {
     return b < a && b < c;
@@ -14,11 +13,11 @@ int main()
   int b = 0;
   int x = 0;
   int count = 0;
-  int localMins = 0;
+  int local_mins = 0;
   try {
     while (std::cin >> x && x != 0) {
       if (count >= 2 && ryabchikov::isLocalMin(a, b, x)) {
-        ++localMins;
+        ++local_mins;
       }
       a = b;
       b = x;
