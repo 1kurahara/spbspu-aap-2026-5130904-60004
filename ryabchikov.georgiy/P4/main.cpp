@@ -70,3 +70,4 @@ if (result == nullptr) {
   delete[] result;
   return 0;
 }
+
