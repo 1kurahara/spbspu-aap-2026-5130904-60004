@@ -2,7 +2,7 @@
 #include <cstddef>
 #include <iostream>
 #include <new>
-namespace ryabchikov {
+namespace ryabchikov{
 char *removeLatin(const char *source, char *result)
 {
   size_t j = 0;
