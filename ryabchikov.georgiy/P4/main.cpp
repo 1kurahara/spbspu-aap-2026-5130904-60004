@@ -2,6 +2,7 @@
 #include <cstddef>
 #include <iostream>
 #include <new>
+
 namespace ryabchikov {
   char *removeLatin(const char *source, char *result)
   {
@@ -16,6 +17,7 @@ namespace ryabchikov {
     result[j] = '\0';
     return result;
   }
+
   char *readLine(std::istream &in, size_t &length)
   {
     const size_t initial_capacity = 16;
@@ -46,32 +48,34 @@ namespace ryabchikov {
     line[length] = '\0';
     return line;
   }
-  int main()
-  {
-    char *line = nullptr;
-    char *result = nullptr;
-    try {
-      size_t length = 0;
-      line = ryabchikov::readLine(std::cin, length);
-      if (line == nullptr) {
-        throw "can't allocate memory for the line";
-      }
-      if (length == 0) {
-        throw "empty input";
-      }
+}
 
-      result = new (std::nothrow) char[length + 1];
-      if (result == nullptr) {
-        throw "can't allocate memory for the result";
-      }
-    } catch (const char *error) {
-      delete[] line;
-      std::cerr << "Error: " << error << "\n";
-      return 1;
+int main()
+{
+  char *line = nullptr;
+  char *result = nullptr;
+  try {
+    size_t length = 0;
+    line = ryabchikov::readLine(std::cin, length);
+    if (line == nullptr) {
+      throw "can't allocate memory for the line";
     }
-    ryabchikov::removeLatin(line, result);
-    std::cout << result << "\n";
+    if (length == 0) {
+      throw "empty input";
+    }
+
+    result = new (std::nothrow) char[length + 1];
+    if (result == nullptr) {
+      throw "can't allocate memory for the result";
+    }
+  } catch (const char *error) {
     delete[] line;
-    delete[] result;
-    return 0;
+    std::cerr << "Error: " << error << "\n";
+    return 1;
   }
+  ryabchikov::removeLatin(line, result);
+  std::cout << result << "\n";
+  delete[] line;
+  delete[] result;
+  return 0;
+}
