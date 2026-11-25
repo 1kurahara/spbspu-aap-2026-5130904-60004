@@ -51,68 +51,69 @@ namespace ryabchikov {
     }
     out << '\n';
   }
+}
 
-  int main(int argc, char *argv[])
-  {
-    int num = 0;
+int main(int argc, char *argv[])
+{
+  int num = 0;
 
-    try {
-      if (argc != 4) {
-        throw "expected 3 arguments: num input output";
-      }
-
-      if (argv[1][0] == '1' && argv[1][1] == '\0') {
-        num = 1;
-      } else if (argv[1][0] == '2' && argv[1][1] == '\0') {
-        num = 2;
-      } else {
-        throw "first argument must be 1 or 2";
-      }
-    } catch (const char *error) {
-      std::cerr << "Error: " << error << '\n';
-      return 1;
+  try {
+    if (argc != 4) {
+      throw "expected 3 arguments: num input output";
     }
 
-    const int max_size = 10000;
-    int fixed_array[max_size] = {};
-    int *dynamic_array = nullptr;
+    if (argv[1][0] == '1' && argv[1][1] == '\0') {
+      num = 1;
+    } else if (argv[1][0] == '2' && argv[1][1] == '\0') {
+      num = 2;
+    } else {
+      throw "first argument must be 1 or 2";
+    }
+  } catch (const char *error) {
+    std::cerr << "Error: " << error << '\n';
+    return 1;
+  }
 
-    try {
-      std::ifstream input(argv[2]);
-      int rows = 0;
-      int cols = 0;
+  const int max_size = 10000;
+  int fixed_array[max_size] = {};
+  int *dynamic_array = nullptr;
 
-      if (!(input >> rows >> cols) || rows < 0 || cols < 0) {
+  try {
+    std::ifstream input(argv[2]);
+    int rows = 0;
+    int cols = 0;
+
+    if (!(input >> rows >> cols) || rows < 0 || cols < 0) {
+      throw "input is not a matrix";
+    }
+
+    const long long count = 1LL * rows * cols;
+    int *data = fixed_array;
+
+    if (num == 1 && count > max_size) {
+      throw "matrix is too big";
+    }
+
+    if (num == 2) {
+      dynamic_array = new int[count];
+      data = dynamic_array;
+    }
+
+    for (long long i = 0; i < count; ++i) {
+      if (!(input >> data[i])) {
         throw "input is not a matrix";
       }
-
-      const long long count = 1LL * rows * cols;
-      int *data = fixed_array;
-
-      if (num == 1 && count > max_size) {
-        throw "matrix is too big";
-      }
-
-      if (num == 2) {
-        dynamic_array = new int[count];
-        data = dynamic_array;
-      }
-
-      for (long long i = 0; i < count; ++i) {
-        if (!(input >> data[i])) {
-          throw "input is not a matrix";
-        }
-      }
-
-      ryabchikov::processMatrix(data, rows, cols);
-      std::ofstream output(argv[3]);
-      ryabchikov::writeMatrix(output, data, rows, cols);
-    } catch (const char *error) {
-      delete[] dynamic_array;
-      std::cerr << "Error: " << error << '\n';
-      return 2;
     }
 
+    ryabchikov::processMatrix(data, rows, cols);
+    std::ofstream output(argv[3]);
+    ryabchikov::writeMatrix(output, data, rows, cols);
+  } catch (const char *error) {
     delete[] dynamic_array;
-    return 0;
+    std::cerr << "Error: " << error << '\n';
+    return 2;
   }
+
+  delete[] dynamic_array;
+  return 0;
+}
