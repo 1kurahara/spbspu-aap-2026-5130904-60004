@@ -30,7 +30,7 @@ namespace ryabchikov {
     char c = 0;
     while (in.get(c) && c != '\n') {
       if (length + 1 == capacity) {
-        char *bigger = new (std::nothrow) char[capacity * 2];
+        char *const bigger = new (std::nothrow) char[capacity * 2];
         if (bigger == nullptr) {
           delete[] line;
           return nullptr;
