@@ -7,7 +7,8 @@ namespace ryabchikov {
   {
     size_t j = 0;
     for (size_t i = 0; source[i] != '\0'; ++i) {
-      if (!std::isalpha(static_cast< unsigned char >(source[i]))) {
+      const unsigned char symbol = source[i];
+      if (!std::isalpha(symbol)) {
         result[j] = source[i];
         ++j;
       }
@@ -17,7 +18,8 @@ namespace ryabchikov {
   }
   char *readLine(std::istream &in, size_t &length)
   {
-    size_t capacity = 16;
+    const size_t initial_capacity = 16;
+    size_t capacity = initial_capacity;
     char *line = new (std::nothrow) char[capacity];
     if (line == nullptr) {
       return nullptr;
