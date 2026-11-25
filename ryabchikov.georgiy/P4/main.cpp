@@ -3,52 +3,49 @@
 #include <iostream>
 #include <new>
 namespace ryabchikov {
-  char *removeLatin(const char *source, char *result)
-  {
-    size_t j = 0;
-    for (size_t i = 0; source[i] != '\0'; ++i) {
-      const unsigned char symbol = source[i];
-      if (!std::isalpha(symbol)) {
-        result[j] = source[i];
-        ++j;
-      }
+char *removeLatin(const char *source, char *result) {
+  size_t j = 0;
+  for (size_t i = 0; source[i] != '\0'; ++i) {
+    const unsigned char symbol = source[i];
+    if (!std::isalpha(symbol)) {
+      result[j] = source[i];
+      ++j;
     }
-    result[j] = '\0';
-    return result;
   }
-  char *readLine(std::istream &in, size_t &length)
-  {
-    const size_t initial_capacity = 16;
-    size_t capacity = initial_capacity;
-    char *line = new (std::nothrow) char[capacity];
-    if (line == nullptr) {
-      return nullptr;
-    }
-    length = 0;
-    char c = 0;
-    while (in.get(c) && c != '\n') {
-      if (length + 1 == capacity) {
-        char *bigger = new (std::nothrow) char[capacity * 2];
-        if (bigger == nullptr) {
-          delete[] line;
-          return nullptr;
-        }
-        for (size_t i = 0; i < length; ++i) {
-          bigger[i] = line[i];
-        }
-        delete[] line;
-        line = bigger;
-        capacity *= 2;
-      }
-      line[length] = c;
-      ++length;
-    }
-    line[length] = '\0';
-    return line;
-  }
+  result[j] = '\0';
+  return result;
 }
-int main()
-{
+char *readLine(std::istream &in, size_t &length) {
+  const size_t initial_capacity = 16;
+  size_t capacity = initial_capacity;
+  char *line = new (std::nothrow) char[capacity];
+  if (line == nullptr) {
+    return nullptr;
+  }
+  length = 0;
+  char c = 0;
+  while (in.get(c) && c != '\n') {
+    if (length + 1 == capacity) {
+      char *bigger = new (std::nothrow) char[capacity * 2];
+      if (bigger == nullptr) {
+        delete[] line;
+        return nullptr;
+      }
+      for (size_t i = 0; i < length; ++i) {
+        bigger[i] = line[i];
+      }
+      delete[] line;
+      line = bigger;
+      capacity *= 2;
+    }
+    line[length] = c;
+    ++length;
+  }
+  line[length] = '\0';
+  return line;
+}
+} // namespace ryabchikov
+int main() {
   char *line = nullptr;
   char *result = nullptr;
   try {
